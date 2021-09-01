@@ -231,12 +231,14 @@ int
 img_mgmt_impl_write_pending(int slot, bool permanent)
 {
     int rc;
+    int image_idx = slot / 2;
 
-    if (slot != 1) {
-        return MGMT_ERR_EINVAL;
+    if((slot % 2) == 0) {
+      return MGMT_ERR_EINVAL;
     }
 
-    rc = boot_request_upgrade(permanent);
+    rc = boot_request_upgrade_multi(image_idx, permanent);
+
     if (rc != 0) {
         return MGMT_ERR_EUNKNOWN;
     }

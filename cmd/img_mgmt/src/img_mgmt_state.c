@@ -36,7 +36,7 @@ img_mgmt_state_flags(int query_slot)
     uint8_t flags;
     int swap_type;
 
-    assert(query_slot == 0 || query_slot == 1);
+    assert(query_slot > 0 || query_slot < 5);
 
     flags = 0;
 
@@ -205,7 +205,7 @@ img_mgmt_state_read(struct mgmt_ctxt *ctxt)
 
     err |= cbor_encoder_create_array(&ctxt->encoder, &images,
                                        CborIndefiniteLength);
-    for (i = 0; i < 2; i++) {
+    for (i = 0; i < 4; i++) {
         rc = img_mgmt_read_info(i, &ver, hash, &flags);
         if (rc != 0) {
             continue;
